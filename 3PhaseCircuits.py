@@ -695,7 +695,7 @@ elif option == 'Delta-Estrella':
 elif option == 'Estrella-Delta':
 
     image = Image.open("DistribucionEstrellaDelta.png")
-    st.image(image, caption='Circuito trifasico Estrella - Estrella 4 hilos')
+    st.image(image, caption='Circuito trifasico Estrella - Delta')
 
     "## Selección voltajes:"
 
@@ -921,7 +921,7 @@ elif option == 'Estrella-Delta':
 else:
 
     image = Image.open("DistribucionEstrellaEstrella3Hilos.png")
-    st.image(image, caption='Circuito trifasico Estrella - Estrella 4 hilos')
+    st.image(image, caption='Circuito trifasico Estrella - Estrella 3 hilos')
     
     "## Selección voltajes:"
 

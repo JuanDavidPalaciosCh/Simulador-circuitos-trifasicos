@@ -317,14 +317,14 @@ def estrella_delta(v: tuple, z: tuple) -> None:
     f_CA : tuple = transform_to_polar((f_rect[2] - f_rect[0], ))[0]
 
     # Tensiones de fase
-    f_ab: tuple = transform_to_polar((f_rect[1] - f_rect[0], ))[0]
-    f_bc: tuple = transform_to_polar((f_rect[2] - f_rect[1], ))[0] 
-    f_ca: tuple = transform_to_polar((f_rect[2] - f_rect[0], ))[0]
+    f_ab: tuple = f_pol[0]
+    f_bc: tuple = f_pol[1] 
+    f_ca: tuple = f_pol[2]
 
     # Corrientes de fase
-    i_ab: tuple = transform_to_polar((transform_to_rect((f_ab, ))[0] / z_rect[0], ))[0]
-    i_bc: tuple = transform_to_polar((transform_to_rect((f_bc, ))[0] / z_rect[1], ))[0]
-    i_ca: tuple = transform_to_polar((transform_to_rect((f_ca, ))[0] / z_rect[2], ))[0]
+    i_ab: tuple = transform_to_polar((transform_to_rect((f_AB, ))[0] / z_rect[0], ))[0]
+    i_bc: tuple = transform_to_polar((transform_to_rect((f_BC, ))[0] / z_rect[1], ))[0]
+    i_ca: tuple = transform_to_polar((transform_to_rect((f_CA, ))[0] / z_rect[2], ))[0]
 
     # Print solution
     print("Corrientes de fase:")
@@ -361,7 +361,7 @@ def estrella_delta(v: tuple, z: tuple) -> None:
 import numpy as np
 
 def estrella_estrella_3hilos(v: tuple, z: tuple) -> None:
-    # Fuentes / Tensiones fase
+    # Fuentes
     f_an: tuple = v[0]
     f_bn: tuple = v[1]
     f_cn: tuple = v[2]
@@ -379,7 +379,7 @@ def estrella_estrella_3hilos(v: tuple, z: tuple) -> None:
 
     # Corrientes necesarias para hallar corrientes de linea
     eq_matrix = np.array([[z_rect[0] + z_rect[1], -1 * z_rect[1]], [-1 * z_rect[1], z_rect[1] + z_rect[2]]])
-    v_matrix = np.array([[f_rect[0]], [f_rect[1]]])
+    v_matrix = np.array([[f_rect[0] - f_rect[1]], [f_rect[1] - f_rect[2]]])
 
     sol_matrix = np.dot(np.linalg.inv(eq_matrix), v_matrix)
 
@@ -389,12 +389,17 @@ def estrella_estrella_3hilos(v: tuple, z: tuple) -> None:
     # Corrientes de fase / linea
     i_an: tuple = transform_to_polar((i_1, ))[0]
     i_bn: tuple = transform_to_polar((i_2 - i_1, ))[0]
-    i_cn: tuple = transform_to_polar((i_2, ))[0]
+    i_cn: tuple = transform_to_polar((-1 * i_2, ))[0]
 
     # Tensiones de linea
     f_ab : tuple = transform_to_polar((f_rect[0] - f_rect[1], ))[0]
     f_bc : tuple = transform_to_polar((f_rect[1] - f_rect[2], ))[0]
     f_ca : tuple = transform_to_polar((f_rect[2] - f_rect[0], ))[0]
+
+    # Tensiones de fase
+    v_an = transform_to_polar((transform_to_rect((i_an, ))[0] * z_rect[0], ))[0]
+    v_bn = transform_to_polar((transform_to_rect((i_bn, ))[0] * z_rect[1], ))[0]
+    v_cn = transform_to_polar((transform_to_rect((i_cn, ))[0] * z_rect[2], ))[0]
 
 
     # Print solution
@@ -413,9 +418,9 @@ def estrella_estrella_3hilos(v: tuple, z: tuple) -> None:
     print("")
 
     print("Tensiones de fase:")
-    print("Van = {:.3f} ∡ {:.3f}".format(f_an[0], f_an[1]))
-    print("Vbn = {:.3f} ∡ {:.3f}".format(f_bn[0], f_bn[1]))
-    print("Vcn = {:.3f} ∡ {:.3f}".format(f_cn[0], f_cn[1]))
+    print("Van = {:.3f} ∡ {:.3f}".format(v_an[0], v_an[1]))
+    print("Vbn = {:.3f} ∡ {:.3f}".format(v_bn[0], v_bn[1]))
+    print("Vcn = {:.3f} ∡ {:.3f}".format(v_cn[0], v_cn[1]))
 
     print("")
 
@@ -424,4 +429,4 @@ def estrella_estrella_3hilos(v: tuple, z: tuple) -> None:
     print("VBC = {:.3f} ∡ {:.3f}".format(f_bc[0], f_bc[1]))
     print("VCA = {:.3f} ∡ {:.3f}".format(f_ca[0], f_ca[1]))
 
-    return (i_an, i_bn, i_cn), (i_an, i_bn, i_cn), (f_an, f_bn, f_cn), (f_ab, f_bc, f_ca)
+    return (i_an, i_bn, i_cn), (i_an, i_bn, i_cn), (v_an, v_bn, v_cn), (f_ab, f_bc, f_ca)
