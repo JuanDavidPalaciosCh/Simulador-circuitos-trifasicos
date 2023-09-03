@@ -43,7 +43,7 @@ if option == 'Delta-Delta':
     with col2:
         v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240)
 
-    "## Selección fasores:"
+    "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
@@ -80,7 +80,7 @@ if option == 'Delta-Delta':
 
     z: tuple = (z_ab, z_bc, z_ca)
 
-    i_fase, i_linea, v_fase, v_linea = delta_delta(v, z)
+    i_fase, i_linea, v_fase, v_linea, s = delta_delta(v, z)
 
     "----------------------------------------------------------------------------"
 
@@ -98,6 +98,8 @@ if option == 'Delta-Delta':
         st.markdown("$IAa$ = {:.3f} ∡ {:.3f}".format(i_linea[0][0], i_linea[0][1]))
         st.markdown("$IBb$ = {:.3f} ∡ {:.3f}".format(i_linea[1][0], i_linea[1][1]))
         st.markdown("$ICc$ = {:.3f} ∡ {:.3f}".format(i_linea[2][0], i_linea[2][1]))
+
+        st.markdown("$S$ = {:.3f} + i {:.3f}".format(s.real, s.imag))
 
     with col2:
         "### Tensiones de fase:"
@@ -269,7 +271,7 @@ elif option == 'Estrella-Estrella 4 hilos':
     with col2:
         v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
 
-    "## Selección fasores:"
+    "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
@@ -306,7 +308,7 @@ elif option == 'Estrella-Estrella 4 hilos':
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea = estrella_estrella(v, z)
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella(v, z)
 
     "----------------------------------------------------------------------------"
 
@@ -325,6 +327,8 @@ elif option == 'Estrella-Estrella 4 hilos':
         st.markdown("$IBb$ = {:.3f} ∡ {:.3f}".format(i_linea[1][0], i_linea[1][1]))
         st.markdown("$ICc$ = {:.3f} ∡ {:.3f}".format(i_linea[2][0], i_linea[2][1]))
 
+        st.markdown("Corrimiento del neutro: {:.3f} ∡ {:.3f}".format(n_corrimiento[0], n_corrimiento[1]))
+
     with col2:
         "### Tensiones de fase:"
         st.markdown("$Van$ = {:.3f} ∡ {:.3f}".format(v_fase[0][0], v_fase[0][1]))
@@ -335,6 +339,9 @@ elif option == 'Estrella-Estrella 4 hilos':
         st.markdown("$VAB$ = {:.3f} ∡ {:.3f}".format(v_linea[0][0], v_linea[0][1]))
         st.markdown("$VBC$ = {:.3f} ∡ {:.3f}".format(v_linea[1][0], v_linea[1][1]))
         st.markdown("$VCA$ = {:.3f} ∡ {:.3f}".format(v_linea[2][0], v_linea[2][1]))
+
+        st.markdown("$S$ = {:.3f} + i {:.3f}".format(s.real, s.imag))
+
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
@@ -495,7 +502,7 @@ elif option == 'Delta-Estrella':
     with col2:
         v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240)
 
-    "## Selección fasores:"
+    "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
@@ -532,7 +539,7 @@ elif option == 'Delta-Estrella':
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea = delta_estrella(v, z)
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = delta_estrella(v, z)
 
     "----------------------------------------------------------------------------"
 
@@ -551,6 +558,9 @@ elif option == 'Delta-Estrella':
         st.markdown("$IBb$ = {:.3f} ∡ {:.3f}".format(i_linea[1][0], i_linea[1][1]))
         st.markdown("$ICc$ = {:.3f} ∡ {:.3f}".format(i_linea[2][0], i_linea[2][1]))
 
+        st.markdown("Corrimiento del neutro: {:.3f} ∡ {:.3f}".format(n_corrimiento[0], n_corrimiento[1]))
+
+
     with col2:
         "### Tensiones de fase:"
         st.markdown("$Van$ = {:.3f} ∡ {:.3f}".format(v_fase[0][0], v_fase[0][1]))
@@ -561,6 +571,8 @@ elif option == 'Delta-Estrella':
         st.markdown("$VAB$ = {:.3f} ∡ {:.3f}".format(v_linea[0][0], v_linea[0][1]))
         st.markdown("$VBC$ = {:.3f} ∡ {:.3f}".format(v_linea[1][0], v_linea[1][1]))
         st.markdown("$VCA$ = {:.3f} ∡ {:.3f}".format(v_linea[2][0], v_linea[2][1]))
+
+        st.markdown("$S$ = {:.3f} + i {:.3f}".format(s.real, s.imag))
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
@@ -721,7 +733,7 @@ elif option == 'Estrella-Delta':
     with col2:
         v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
 
-    "## Selección fasores:"
+    "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
@@ -758,7 +770,7 @@ elif option == 'Estrella-Delta':
 
     z: tuple = (z_ab, z_bc, z_ca)
 
-    i_fase, i_linea, v_fase, v_linea = estrella_delta(v, z)
+    i_fase, i_linea, v_fase, v_linea, s = estrella_delta(v, z)
 
     "----------------------------------------------------------------------------"
 
@@ -776,6 +788,8 @@ elif option == 'Estrella-Delta':
         st.markdown("$IAa$ = {:.3f} ∡ {:.3f}".format(i_linea[0][0], i_linea[0][1]))
         st.markdown("$IBb$ = {:.3f} ∡ {:.3f}".format(i_linea[1][0], i_linea[1][1]))
         st.markdown("$ICc$ = {:.3f} ∡ {:.3f}".format(i_linea[2][0], i_linea[2][1]))
+
+        st.markdown("$S$ = {:.3f} + i {:.3f}".format(s.real, s.imag))
 
     with col2:
         "### Tensiones de fase:"
@@ -947,7 +961,7 @@ else:
     with col2:
         v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
 
-    "## Selección fasores:"
+    "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
@@ -984,7 +998,7 @@ else:
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea = estrella_estrella_3hilos(v, z)
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella_3hilos(v, z)
 
     "----------------------------------------------------------------------------"
 
@@ -1003,6 +1017,9 @@ else:
         st.markdown("$IBb$ = {:.3f} ∡ {:.3f}".format(i_linea[1][0], i_linea[1][1]))
         st.markdown("$ICc$ = {:.3f} ∡ {:.3f}".format(i_linea[2][0], i_linea[2][1]))
 
+        st.markdown("Corrimiento del neutro: {:.3f} ∡ {:.3f}".format(n_corrimiento[0], n_corrimiento[1]))
+
+
     with col2:
         "### Tensiones de fase:"
         st.markdown("$Van$ = {:.3f} ∡ {:.3f}".format(v_fase[0][0], v_fase[0][1]))
@@ -1013,6 +1030,8 @@ else:
         st.markdown("$VAB$ = {:.3f} ∡ {:.3f}".format(v_linea[0][0], v_linea[0][1]))
         st.markdown("$VBC$ = {:.3f} ∡ {:.3f}".format(v_linea[1][0], v_linea[1][1]))
         st.markdown("$VCA$ = {:.3f} ∡ {:.3f}".format(v_linea[2][0], v_linea[2][1]))
+
+        st.markdown("$S$ = {:.3f} + i {:.3f}".format(s.real, s.imag))
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
