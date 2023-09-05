@@ -24,48 +24,72 @@ if option == 'Delta-Delta':
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        v_ab_n = st.number_input('Magnitud $V_{ab}$', value=100)
+        v_ab_n = st.number_input('Magnitud $V_{ab}$', value=100.00)
 
     with col2:
-        v_ab_a = st.number_input('Angulo $V_{ab}$', value=0)
+        v_ab_a = st.number_input('Angulo $V_{ab}$', value=0.00)
 
     with col3:
-        v_bc_n = st.number_input('Magnitud $V_{bc}$', value=100)
+        v_bc_n = st.number_input('Magnitud $V_{bc}$', value=100.00)
 
     with col4:
-        v_bc_a = st.number_input('Angulo $V_{bc}$', value=-120)
+        v_bc_a = st.number_input('Angulo $V_{bc}$', value=-120.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        v_ca_n = st.number_input('Magnitud $V_{ca}$', value=100)
+        v_ca_n = st.number_input('Magnitud $V_{ca}$', value=100.00)
 
     with col2:
-        v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240)
+        v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240.00)
 
     "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        z_ab_r = st.number_input('Parte real de $Z_{ab}$', value=40)
+        z_ab_r = st.number_input('Parte real de $Z_{ab}$', value=40.00)
 
     with col2:
-        z_ab_i = st.number_input('Parte imaginaria de $Z_{ab}$', value=15)
+        z_ab_i = st.number_input('Parte imaginaria de $Z_{ab}$', value=15.00)
 
     with col3:
-        z_bc_r = st.number_input('Parte real de $Z_{bc}$', value=35)
+        z_bc_r = st.number_input('Parte real de $Z_{bc}$', value=35.00)
 
     with col4:
-        z_bc_i = st.number_input('Parte imaginaria de $Z_{bc}$', value=-15)
+        z_bc_i = st.number_input('Parte imaginaria de $Z_{bc}$', value=-15.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        z_ca_r = st.number_input('Parte real de $Z_{ca}$', value=10)
+        z_ca_r = st.number_input('Parte real de $Z_{ca}$', value=10.00)
 
     with col2:
-        z_ca_i = st.number_input('Parte imaginaria de $Z_{ca}$', value=30)
+        z_ca_i = st.number_input('Parte imaginaria de $Z_{ca}$', value=30.00)
+
+    "## Selección Impedancias de linea:"
+
+    col1, col2, col3, col4= st.columns(4)
+
+    with col1:
+        z_aa_r = st.number_input('Parte real de $Z_{Aa}$', value=0.00)
+
+    with col2:
+        z_aa_i = st.number_input('Parte imaginaria de $Z_{Aa}$', value=0.00)
+
+    with col3:
+        z_bb_r = st.number_input('Parte real de $Z_{Bb}$', value=0.00)
+
+    with col4:
+        z_bb_i = st.number_input('Parte imaginaria de $Z_{Bb}$', value=0.00)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        z_cc_r = st.number_input('Parte real de $Z_{Cc}$', value=0.00)
+
+    with col2:
+        z_cc_i = st.number_input('Parte imaginaria de $Z_{Cc}$', value=0.00)
 
     
     v_ab: tuple = (v_ab_n, v_ab_a)
@@ -80,7 +104,13 @@ if option == 'Delta-Delta':
 
     z: tuple = (z_ab, z_bc, z_ca)
 
-    i_fase, i_linea, v_fase, v_linea, s = delta_delta(v, z)
+    z_aa: complex = complex(z_aa_r, z_aa_i)
+    z_bb: complex = complex(z_bb_r, z_bb_i)
+    z_cc: complex = complex(z_cc_r, z_cc_i)
+
+    z_l: tuple = (z_aa, z_bb, z_cc)
+
+    i_fase, i_linea, v_fase, v_linea, s = delta_delta(v, z, z_l)
 
     "----------------------------------------------------------------------------"
 
@@ -114,7 +144,7 @@ if option == 'Delta-Delta':
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
-    'Graficns: ',
+    'Graficos: ',
     ('Corrientes de fase', 'Corrientes de linea', 'Tensiones de fase', 'Tensiones de linea'))
 
     if graphs == 'Corrientes de fase':
@@ -252,48 +282,73 @@ elif option == 'Estrella-Estrella 4 hilos':
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        v_an_n = st.number_input('Magnitud $V_{an}$', value=100)
+        v_an_n = st.number_input('Magnitud $V_{an}$', value=100.00)
 
     with col2:
-        v_an_a = st.number_input('Angulo $V_{an}$', value=0)
+        v_an_a = st.number_input('Angulo $V_{an}$', value=0.00)
 
     with col3:
-        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100)
+        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100.00)
 
     with col4:
-        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120)
+        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100)
+        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100.00)
 
     with col2:
-        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
+        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240.00)
 
     "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40)
+        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40.00)
 
     with col2:
-        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15)
+        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15.00)
 
     with col3:
-        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35)
+        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35.00)
 
     with col4:
-        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15)
+        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10)
+        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10.00)
 
     with col2:
-        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30)
+        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30.00)
+
+
+    "## Selección Impedancias de linea:"
+
+    col1, col2, col3, col4= st.columns(4)
+
+    with col1:
+        z_aa_r = st.number_input('Parte real de $Z_{Aa}$', value=0.00)
+
+    with col2:
+        z_aa_i = st.number_input('Parte imaginaria de $Z_{Aa}$', value=0.00)
+
+    with col3:
+        z_bb_r = st.number_input('Parte real de $Z_{Bb}$', value=0.00)
+
+    with col4:
+        z_bb_i = st.number_input('Parte imaginaria de $Z_{Bb}$', value=0.00)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        z_cc_r = st.number_input('Parte real de $Z_{Cc}$', value=0.00)
+
+    with col2:
+        z_cc_i = st.number_input('Parte imaginaria de $Z_{Cc}$', value=0.00)
 
     
     v_an: tuple = (v_an_n, v_an_a)
@@ -308,7 +363,13 @@ elif option == 'Estrella-Estrella 4 hilos':
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella(v, z)
+    z_aa: complex = complex(z_aa_r, z_aa_i)
+    z_bb: complex = complex(z_bb_r, z_bb_i)
+    z_cc: complex = complex(z_cc_r, z_cc_i)
+
+    z_l: tuple = (z_aa, z_bb, z_cc)
+
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella(v, z, z_l)
 
     "----------------------------------------------------------------------------"
 
@@ -345,7 +406,7 @@ elif option == 'Estrella-Estrella 4 hilos':
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
-    'Graficns: ',
+    'Graficos: ',
     ('Corrientes de fase', 'Corrientes de linea', 'Tensiones de fase', 'Tensiones de linea'))
 
     if graphs == 'Corrientes de fase':
@@ -483,48 +544,73 @@ elif option == 'Delta-Estrella':
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        v_ab_n = st.number_input('Magnitud $V_{ab}$', value=100)
+        v_ab_n = st.number_input('Magnitud $V_{ab}$', value=100.00)
 
     with col2:
-        v_ab_a = st.number_input('Angulo $V_{ab}$', value=0)
+        v_ab_a = st.number_input('Angulo $V_{ab}$', value=0.00)
 
     with col3:
-        v_bc_n = st.number_input('Magnitud $V_{bc}$', value=100)
+        v_bc_n = st.number_input('Magnitud $V_{bc}$', value=100.00)
 
     with col4:
-        v_bc_a = st.number_input('Angulo $V_{bc}$', value=-120)
+        v_bc_a = st.number_input('Angulo $V_{bc}$', value=-120.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        v_ca_n = st.number_input('Magnitud $V_{ca}$', value=100)
+        v_ca_n = st.number_input('Magnitud $V_{ca}$', value=100.00)
 
     with col2:
-        v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240)
+        v_ca_a = st.number_input('Angulo de $V_{ca}$', value=-240.00)
 
     "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40)
+        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40.00)
 
     with col2:
-        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15)
+        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15.00)
 
     with col3:
-        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35)
+        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35.00)
 
     with col4:
-        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15)
+        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10)
+        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10.00)
 
     with col2:
-        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30)
+        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30.00)
+
+    
+    "## Selección Impedancias de linea:"
+
+    col1, col2, col3, col4= st.columns(4)
+
+    with col1:
+        z_aa_r = st.number_input('Parte real de $Z_{Aa}$', value=0.00)
+
+    with col2:
+        z_aa_i = st.number_input('Parte imaginaria de $Z_{Aa}$', value=0.00)
+
+    with col3:
+        z_bb_r = st.number_input('Parte real de $Z_{Bb}$', value=0.00)
+
+    with col4:
+        z_bb_i = st.number_input('Parte imaginaria de $Z_{Bb}$', value=0.00)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        z_cc_r = st.number_input('Parte real de $Z_{Cc}$', value=0.00)
+
+    with col2:
+        z_cc_i = st.number_input('Parte imaginaria de $Z_{Cc}$', value=0.00)
 
     
     v_ab: tuple = (v_ab_n, v_ab_a)
@@ -539,7 +625,13 @@ elif option == 'Delta-Estrella':
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = delta_estrella(v, z)
+    z_aa: complex = complex(z_aa_r, z_aa_i)
+    z_bb: complex = complex(z_bb_r, z_bb_i)
+    z_cc: complex = complex(z_cc_r, z_cc_i)
+
+    z_l: tuple = (z_aa, z_bb, z_cc)
+
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = delta_estrella(v, z, z_l)
 
     "----------------------------------------------------------------------------"
 
@@ -576,7 +668,7 @@ elif option == 'Delta-Estrella':
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
-    'Graficns: ',
+    'Graficos: ',
     ('Corrientes de fase', 'Corrientes de linea', 'Tensiones de fase', 'Tensiones de linea'))
 
     if graphs == 'Corrientes de fase':
@@ -714,48 +806,73 @@ elif option == 'Estrella-Delta':
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        v_an_n = st.number_input('Magnitud $V_{an}$', value=100)
+        v_an_n = st.number_input('Magnitud $V_{an}$', value=100.00)
 
     with col2:
-        v_an_a = st.number_input('Angulo $V_{an}$', value=0)
+        v_an_a = st.number_input('Angulo $V_{an}$', value=0.00)
 
     with col3:
-        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100)
+        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100.00)
 
     with col4:
-        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120)
+        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100)
+        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100.00)
 
     with col2:
-        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
+        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240.00)
 
     "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        z_ab_r = st.number_input('Parte real de $Z_{ab}$', value=40)
+        z_ab_r = st.number_input('Parte real de $Z_{ab}$', value=40.00)
 
     with col2:
-        z_ab_i = st.number_input('Parte imaginaria de $Z_{ab}$', value=15)
+        z_ab_i = st.number_input('Parte imaginaria de $Z_{ab}$', value=15.00)
 
     with col3:
-        z_bc_r = st.number_input('Parte real de $Z_{bc}$', value=35)
+        z_bc_r = st.number_input('Parte real de $Z_{bc}$', value=35.00)
 
     with col4:
-        z_bc_i = st.number_input('Parte imaginaria de $Z_{bc}$', value=-15)
+        z_bc_i = st.number_input('Parte imaginaria de $Z_{bc}$', value=-15.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        z_ca_r = st.number_input('Parte real de $Z_{ca}$', value=10)
+        z_ca_r = st.number_input('Parte real de $Z_{ca}$', value=10.00)
 
     with col2:
-        z_ca_i = st.number_input('Parte imaginaria de $Z_{c}$', value=30)
+        z_ca_i = st.number_input('Parte imaginaria de $Z_{c}$', value=30.00)
+
+    
+    "## Selección Impedancias de linea:"
+
+    col1, col2, col3, col4= st.columns(4)
+
+    with col1:
+        z_aa_r = st.number_input('Parte real de $Z_{Aa}$', value=0.00)
+
+    with col2:
+        z_aa_i = st.number_input('Parte imaginaria de $Z_{Aa}$', value=0.00)
+
+    with col3:
+        z_bb_r = st.number_input('Parte real de $Z_{Bb}$', value=0.00)
+
+    with col4:
+        z_bb_i = st.number_input('Parte imaginaria de $Z_{Bb}$', value=0.00)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        z_cc_r = st.number_input('Parte real de $Z_{Cc}$', value=0.00)
+
+    with col2:
+        z_cc_i = st.number_input('Parte imaginaria de $Z_{Cc}$', value=0.00)
 
 
     v_an: tuple = (v_an_n, v_an_a)
@@ -770,7 +887,13 @@ elif option == 'Estrella-Delta':
 
     z: tuple = (z_ab, z_bc, z_ca)
 
-    i_fase, i_linea, v_fase, v_linea, s = estrella_delta(v, z)
+    z_aa: complex = complex(z_aa_r, z_aa_i)
+    z_bb: complex = complex(z_bb_r, z_bb_i)
+    z_cc: complex = complex(z_cc_r, z_cc_i)
+
+    z_l: tuple = (z_aa, z_bb, z_cc)
+
+    i_fase, i_linea, v_fase, v_linea, s = estrella_delta(v, z, z_l)
 
     "----------------------------------------------------------------------------"
 
@@ -804,7 +927,7 @@ elif option == 'Estrella-Delta':
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
-    'Graficns: ',
+    'Graficos: ',
     ('Corrientes de fase', 'Corrientes de linea', 'Tensiones de fase', 'Tensiones de linea'))
 
     if graphs == 'Corrientes de fase':
@@ -942,48 +1065,73 @@ else:
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        v_an_n = st.number_input('Magnitud $V_{an}$', value=100)
+        v_an_n = st.number_input('Magnitud $V_{an}$', value=100.00)
 
     with col2:
-        v_an_a = st.number_input('Angulo $V_{an}$', value=0)
+        v_an_a = st.number_input('Angulo $V_{an}$', value=0.00)
 
     with col3:
-        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100)
+        v_bn_n = st.number_input('Magnitud $V_{bn}$', value=100.00)
 
     with col4:
-        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120)
+        v_bn_a = st.number_input('Angulo $V_{bn}$', value=-120.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100)
+        v_cn_n = st.number_input('Magnitud $V_{cn}$', value=100.00)
 
     with col2:
-        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240)
+        v_cn_a = st.number_input('Angulo de $V_{cn}$', value=-240.00)
 
     "## Selección Impedancias:"
 
     col1, col2, col3, col4= st.columns(4)
 
     with col1:
-        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40)
+        z_an_r = st.number_input('Parte real de $Z_{an}$', value=40.00)
 
     with col2:
-        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15)
+        z_an_i = st.number_input('Parte imaginaria de $Z_{an}$', value=15.00)
 
     with col3:
-        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35)
+        z_bn_r = st.number_input('Parte real de $Z_{bn}$', value=35.00)
 
     with col4:
-        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15)
+        z_bn_i = st.number_input('Parte imaginaria de $Z_{bn}$', value=-15.00)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10)
+        z_cn_r = st.number_input('Parte real de $Z_{cn}$', value=10.00)
 
     with col2:
-        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30)
+        z_cn_i = st.number_input('Parte imaginaria de $Z_{cn}$', value=30.00)
+
+
+    "## Selección Impedancias de linea:"
+
+    col1, col2, col3, col4= st.columns(4)
+
+    with col1:
+        z_aa_r = st.number_input('Parte real de $Z_{Aa}$', value=0.00)
+
+    with col2:
+        z_aa_i = st.number_input('Parte imaginaria de $Z_{Aa}$', value=0.00)
+
+    with col3:
+        z_bb_r = st.number_input('Parte real de $Z_{Bb}$', value=0.00)
+
+    with col4:
+        z_bb_i = st.number_input('Parte imaginaria de $Z_{Bb}$', value=0.00)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        z_cc_r = st.number_input('Parte real de $Z_{Cc}$', value=0.00)
+
+    with col2:
+        z_cc_i = st.number_input('Parte imaginaria de $Z_{Cc}$', value=0.00)
 
     
     v_an: tuple = (v_an_n, v_an_a)
@@ -998,7 +1146,13 @@ else:
 
     z: tuple = (z_an, z_bn, z_cn)
 
-    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella_3hilos(v, z)
+    z_aa: complex = complex(z_aa_r, z_aa_i)
+    z_bb: complex = complex(z_bb_r, z_bb_i)
+    z_cc: complex = complex(z_cc_r, z_cc_i)
+
+    z_l: tuple = (z_aa, z_bb, z_cc)
+
+    i_fase, i_linea, v_fase, v_linea, n_corrimiento, s = estrella_estrella_3hilos(v, z, z_l)
 
     "----------------------------------------------------------------------------"
 
@@ -1035,7 +1189,7 @@ else:
 
     "----------------------------------------------------------------------------"
     graphs = st.selectbox(
-    'Graficns: ',
+    'Graficos: ',
     ('Corrientes de fase', 'Corrientes de linea', 'Tensiones de fase', 'Tensiones de linea'))
 
     if graphs == 'Corrientes de fase':
